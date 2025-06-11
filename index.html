@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>会社収支管理アプリ</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ログイン画面 -->
+    <div id="login-page" class="page">
+      <div class="container login-container">
+        <h1>収支管理アプリ</h1>
+
+        <div class="auth-form active" id="login-form-container">
+          <h2>ログイン</h2>
+          <form id="login-form">
+            <div class="form-group">
+              <label for="login-email">メールアドレス:</label>
+              <input
+                type="email"
+                id="login-email"
+                placeholder="example@mail.com"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="login-password">パスワード:</label>
+              <input type="password" id="login-password" required />
+            </div>
+            <div class="form-error" id="login-error"></div>
+            <button type="submit">ログイン</button>
+          </form>
+          <div class="auth-switch">
+            <p>
+              アカウントをお持ちでないですか？
+              <a href="#" id="show-register">登録する</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="auth-form" id="register-form-container">
+          <h2>アカウント登録</h2>
+          <form id="register-form">
+            <div class="form-group">
+              <label for="register-name">お名前:</label>
+              <input
+                type="text"
+                id="register-name"
+                placeholder="お名前"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="register-email">メールアドレス:</label>
+              <input
+                type="email"
+                id="register-email"
+                placeholder="example@mail.com"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="register-password">パスワード:</label>
+              <input
+                type="password"
+                id="register-password"
+                minlength="6"
+                required
+              />
+              <small>※6文字以上で入力してください</small>
+            </div>
+            <div class="form-group">
+              <label for="register-confirm-password">パスワード(確認):</label>
+              <input
+                type="password"
+                id="register-confirm-password"
+                minlength="6"
+                required
+              />
+            </div>
+            <div class="form-error" id="register-error"></div>
+            <button type="submit">登録する</button>
+          </form>
+          <div class="auth-switch">
+            <p>
+              すでにアカウントをお持ちですか？<br />
+              <a href="#" id="show-login">ログインする</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- メイン画面 -->
+    <div id="main-page" class="page" style="display: none">
+      <div class="container">
+        <header class="app-header">
+          <h1>会社収支管理</h1>
+          <div class="user-info">
+            <span id="user-name">ユーザー名</span>
+            <button id="logout-btn">ログアウト</button>
+          </div>
+        </header>
+
+        <!-- 入力フォーム -->
+        <div class="input-form">
+          <h2>取引入力</h2>
+          <form id="transaction-form">
+            <div class="form-group">
+              <label for="date">日付:</label>
+              <input type="date" id="date" required />
+              <small>※yyyy/mm/dd形式で表示されます</small>
+            </div>
+            <div class="form-group">
+              <label for="description">内容:</label>
+              <input
+                type="text"
+                id="description"
+                placeholder="取引内容を入力"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="type">種類:</label>
+              <select id="type" required>
+                <option value="income">売上</option>
+                <option value="expense">支出</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="amount">金額:</label>
+              <input
+                type="number"
+                id="amount"
+                placeholder="金額を入力"
+                min="0"
+                required
+              />
+            </div>
+            <button type="submit">追加</button>
+          </form>
+        </div>
+
+        <!-- サマリー表示 -->
+        <div class="summary">
+          <h2>今月のサマリー</h2>
+          <div class="summary-items">
+            <div class="summary-item">
+              <h3>売上</h3>
+              <p id="income-total">0円</p>
+            </div>
+            <div class="summary-item">
+              <h3>支出</h3>
+              <p id="expense-total">0円</p>
+            </div>
+            <div class="summary-item">
+              <h3>収支</h3>
+              <p id="balance-total">0円</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 累計表示 -->
+        <div class="accumulative">
+          <h2>累計</h2>
+          <p id="total-balance">0円</p>
+        </div>
+
+        <!-- フィルター部分 -->
+        <div class="filter">
+          <h2>取引履歴</h2>
+          <div class="filter-controls">
+            <label for="month-filter">月を選択:</label>
+            <input type="month" id="month-filter" />
+            <button id="filter-btn">表示</button>
+          </div>
+        </div>
+
+        <!-- 取引履歴テーブル -->
+        <div class="transactions">
+          <table id="transaction-table">
+            <thead>
+              <tr>
+                <th>日付</th>
+                <th>内容</th>
+                <th>種類</th>
+                <th>金額</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="transaction-list">
+              <!-- JavaScript で動的に追加 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
